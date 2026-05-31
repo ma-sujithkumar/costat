@@ -1,0 +1,26 @@
+{
+    "description": "Registry that maps a model name to its builder function. The factory looks the builder up here instead of branching on the name, so adding a model means adding one entry plus one builder - no edits to control flow.",
+    "models": {
+        "lenet5": {
+            "builder": "build_lenet5",
+            "input_channels": 1,
+            "num_classes": 10,
+            "epochs": 3,
+            "display_name": "LeNet-5"
+        },
+        "vgg_mini": {
+            "builder": "build_vgg_mini",
+            "input_channels": 1,
+            "num_classes": 10,
+            "epochs": 3,
+            "display_name": "VGG-mini"
+        },
+        "resnet_mini": {
+            "builder": "build_resnet_mini",
+            "input_channels": 1,
+            "num_classes": 10,
+            "epochs": 8,
+            "display_name": "ResNet-mini"
+        }
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "description": "Candidate parametric families the controller fits per layer. The enhanced controller goes beyond the original Gaussian/Laplacian/Uniform set and adds heavier-tailed and skew-capable families, which describe regularised weight tensors far better. Each entry names a scipy.stats distribution and its free parameter count (used by the BIC complexity penalty).",
+    "candidates": [
+        {"name": "gaussian",   "scipy_name": "norm",     "num_params": 2, "enabled": true},
+        {"name": "laplace",    "scipy_name": "laplace",  "num_params": 2, "enabled": true},
+        {"name": "uniform",    "scipy_name": "uniform",  "num_params": 2, "enabled": true},
+        {"name": "logistic",   "scipy_name": "logistic", "num_params": 2, "enabled": true},
+        {"name": "student_t",  "scipy_name": "t",        "num_params": 3, "enabled": true},
+        {"name": "gennorm",    "scipy_name": "gennorm",  "num_params": 3, "enabled": true},
+        {"name": "skewnormal", "scipy_name": "skewnorm", "num_params": 3, "enabled": true}
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "description": "Goodness-of-fit metrics the controller uses to pick a family. The original CoStat ranked candidates by KL divergence alone, which is sensitive to histogram binning and blind to model complexity. The enhanced controller aggregates several complementary, lower-is-better metrics by rank, so no single metric can dominate and extra parameters must earn their place through the BIC penalty.",
+    "metrics": [
+        {"name": "kl_divergence", "weight": 1.0, "enabled": true},
+        {"name": "bic",           "weight": 1.0, "enabled": true},
+        {"name": "ks_statistic",  "weight": 1.0, "enabled": true},
+        {"name": "wasserstein",   "weight": 1.0, "enabled": true}
+    ],
+    "aggregation": "weighted_rank_sum"
+}

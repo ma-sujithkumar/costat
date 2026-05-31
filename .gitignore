@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+.venv/
+
+# Datasets (downloaded on first run)
+data/
+
+# Scratch and intermediate outputs
+claude_scripts/
+claude_outputs/
+
+# Local docs - everything under docs/ is ignored except the tracked README
+docs/
+
+# OS noise
+.DS_Store
+
+# Source report (not published)
+*.pdf
