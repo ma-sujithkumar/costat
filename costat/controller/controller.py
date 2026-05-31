@@ -1,14 +1,14 @@
 """The distribution controller.
 
-This is the enhanced decision stage. For each layer it fits the full candidate
-family, scores every fit with several complementary metrics, and then selects a
-winner by aggregating the metric *ranks* rather than trusting one raw number.
+For each layer it fits the full candidate family, scores every fit with several
+complementary metrics, and then selects a winner by aggregating the metric
+*ranks* rather than trusting one raw number.
 
-Why rank aggregation: KL divergence alone (the original CoStat criterion) is
-sensitive to histogram binning and rewards extra parameters for free. By making
-each metric vote through its rank and folding in a BIC complexity penalty, a
-heavier-tailed family is only chosen when it agrees across criteria - which is
-what makes the selection robust instead of a coin toss between close fits.
+Why rank aggregation: KL divergence on its own is sensitive to histogram binning
+and rewards extra parameters for free. By making each metric vote through its
+rank and folding in a BIC complexity penalty, a heavier-tailed family is only
+chosen when it agrees across criteria - which is what makes the selection robust
+instead of a coin toss between close fits.
 """
 
 from typing import Any, Dict, List

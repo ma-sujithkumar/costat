@@ -15,31 +15,29 @@ fits a probability distribution to each layer, and then places quantisation
 levels (and activation breakpoints) at *equal-probability* points of that fitted
 distribution - so resolution follows the data instead of the number line.
 
-This repository implements the **software side** of that idea, with an enhanced
-controller for the "fit and choose a distribution" step.
+This repository is the **software side** of that idea: profiling, distribution
+fitting, weight quantisation, and the activation approximation.
 
 ---
 
 ## What the controller does
 
-The original method fitted three families - Gaussian, Laplacian, Uniform - and
-picked the winner by KL divergence alone. That has two weak spots: KL is
-sensitive to how you bin the histogram, and it happily rewards a more flexible
-family even when the extra flexibility is not earned.
+Every layer gets its own distribution, chosen at profiling time rather than
+fixed in advance. Three design choices make that choice trustworthy:
 
-The controller here is more careful on both fronts:
-
-- **A wider candidate family.** Gaussian, Laplacian, Uniform, Logistic,
-  Student-t, generalised Normal, and skew-Normal. Regularised weights are often
-  heavier-tailed than a Gaussian and more skewed than a Laplacian, and these
-  extra families capture that.
-- **A panel of judges instead of one.** Each fit is scored by KL divergence,
-  BIC, the Kolmogorov-Smirnov statistic, and the Wasserstein distance. The BIC
-  term explicitly charges a family for every extra parameter it uses, so a
+- **A wide candidate family.** Gaussian, Laplacian, Uniform, Logistic, Student-t,
+  generalised Normal, and skew-Normal. Regularised weights are often
+  heavier-tailed than a Gaussian and more skewed than a Laplacian, so the pool
+  has to be broad enough to describe those shapes instead of forcing a near-
+  Gaussian fit.
+- **A panel of judges, not one.** Each fit is scored by KL divergence, BIC, the
+  Kolmogorov-Smirnov statistic, and the Wasserstein distance. KL on its own is
+  sensitive to how the histogram is binned and blind to model complexity; the
+  BIC term charges a family for every extra parameter it uses, so a
   three-parameter family only wins when it genuinely fits better.
 - **Selection by rank, not raw score.** The metrics disagree on scale, so each
-  one *ranks* the candidates and the controller adds the ranks. A family has to
-  do well across several independent criteria to be chosen, which makes the pick
+  one ranks the candidates and the controller adds the ranks. A family has to do
+  well across several independent criteria to be chosen, which makes the pick
   stable rather than a coin toss between two close fits.
 
 Because every candidate is exposed through the same `pdf` / `cdf` / `ppf`
@@ -62,9 +60,6 @@ pipeline picks it up.
    INT4, and **approximate tanh** with uniform vs. distribution-aware
    piecewise-linear breakpoints (Stage 4).
 5. **Report** accuracy, approximation error, and the selected family per layer.
-
-The hardware export and FPGA synthesis stages from the paper are intentionally
-out of scope here - this is the software half.
 
 ---
 
@@ -110,10 +105,9 @@ end-to-end accuracy from **47.7%** (uniform breakpoints) to **76.5%**.
 
 Across all three models the controller almost never lands on plain Gaussian or
 Laplacian - it overwhelmingly selects **generalised Normal** and **Student-t**.
-That is the enhanced controller earning its keep: the real weight tails are
-heavier than the original three-family set could describe, and the wider
-candidate pool plus the BIC-guarded ranking pick that up instead of settling for
-a mediocre Gaussian.
+The real weight tails are heavier than a Gaussian or Laplacian would suggest, and
+the wide candidate pool plus the BIC-guarded ranking pick that up instead of
+settling for a mediocre two-parameter fit.
 
 ![VGG-mini accuracy](plots/accuracy_vs_bitwidth_VGG-mini.png)
 ![ResNet-mini selected distributions](plots/selected_distributions_ResNet-mini.png)

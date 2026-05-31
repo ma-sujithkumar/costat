@@ -1,4 +1,4 @@
-"""Classic LeNet-5, the reference model from the CoStat paper.
+"""Classic LeNet-5, the standard convolutional reference network.
 
 The tanh activations are kept as explicit modules so the profiler can hook them
 and the piecewise-linear approximation step can swap them out cleanly.

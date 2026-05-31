@@ -1,5 +1,5 @@
 {
-    "description": "Candidate parametric families the controller fits per layer. The enhanced controller goes beyond the original Gaussian/Laplacian/Uniform set and adds heavier-tailed and skew-capable families, which describe regularised weight tensors far better. Each entry names a scipy.stats distribution and its free parameter count (used by the BIC complexity penalty).",
+    "description": "Candidate parametric families the controller fits per layer. The pool spans light- and heavy-tailed as well as skew-capable shapes, so it can describe regularised weight tensors rather than forcing a near-Gaussian fit. Each entry names a scipy.stats distribution and its free parameter count (used by the BIC complexity penalty).",
     "candidates": [
         {"name": "gaussian",   "scipy_name": "norm",     "num_params": 2, "enabled": true},
         {"name": "laplace",    "scipy_name": "laplace",  "num_params": 2, "enabled": true},

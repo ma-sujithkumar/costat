@@ -12,8 +12,8 @@ venv/
 data/
 
 # Scratch and intermediate outputs
-claude_scripts/
-claude_outputs/
+scratch/
+outputs/
 
 # Local docs - everything under docs/ is ignored except the tracked README
 docs/

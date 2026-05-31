@@ -2,8 +2,8 @@
 values that flow into each tanh.
 
 Weights are read straight from the parameters. Pre-activations are gathered with
-forward hooks on the tanh modules over a handful of calibration batches, exactly
-the z = Wx + b signal the paper places its activation breakpoints against.
+forward hooks on the tanh modules over a handful of calibration batches - exactly
+the z = Wx + b signal the activation breakpoints are placed against.
 """
 
 from typing import Dict, List
