@@ -1,6 +1,6 @@
-# CoStat
+# CoStat - Distribution-aware quantisation of weights and activations.
 
-**Distribution-aware quantisation of weights and activations.**
+
 
 Standard low-bit quantisation treats every weight the same: it slices the value
 range into evenly spaced levels. The trouble is that real weight tensors are not
@@ -20,7 +20,7 @@ controller for the "fit and choose a distribution" step.
 
 ---
 
-## What the controller does (the enhanced part)
+## What the controller does
 
 The original method fitted three families - Gaussian, Laplacian, Uniform - and
 picked the winner by KL divergence alone. That has two weak spots: KL is
